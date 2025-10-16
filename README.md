@@ -1,4 +1,4 @@
-# 🧠 SkillSnapAI
+# SkillSnapAI
 
 SkillSnapAI is an intelligent resume analysis web application that provides **AI-powered feedback**, **ATS scoring**, and **actionable improvement tips** to help job seekers enhance their resumes for their dream roles.
 
