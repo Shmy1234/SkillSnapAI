@@ -95,12 +95,3 @@ SkillSnapAI uses a **modern gradient-driven UI** built with TailwindCSS:
 - Mobile-friendly responsive layout
 
 ---
-
-## 🧰 Example Tech References
-
-```tsx
-// Example: AI-powered feedback call
-const feedback = await ai.feedback(
-  uploadedFile.path,
-  prepareInstructions({ jobTitle, jobDescription })
-);
