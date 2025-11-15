@@ -7,7 +7,7 @@ import {useEffect, useState} from "react";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Resumind" },
+    { title: "SkillSnap.ai" },
     { name: "description", content: "Smart feedback for your dream job!" },
   ];
 }
@@ -39,7 +39,7 @@ export default function Home() {
     loadResumes()
   }, []);
 
-  return <main className="bg-[url('/images/bg-main.svg')] bg-cover">
+  return <main className="bg-gradient-to-r from-blue-200 to-purple-200 bg-cover">
     <Navbar />
 
     <section className="main-section">
