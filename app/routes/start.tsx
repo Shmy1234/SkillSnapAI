@@ -7,23 +7,30 @@ export const meta = () => ([
 ]);
 
 const Start = () => {
-  const reviews = [
-    {
-      name: "Taylor M.",
-      role: "Product Manager",
-      quote: "Landed three callbacks in a week after the ATS fixes that gave clear, actionable tips.",
-    },
-    {
-      name: "Jordan K.",
-      role: "Software Engineer",
-      quote: "The version history and live scoring made iterating way faster than doing it alone.",
-    },
-    {
-      name: "Priya S.",
-      role: "Data Analyst",
-      quote: "Interview conversion went up once I matched the job keywords the tool highlighted.",
-    },
+  const reviewTemplates = [
+    "ATS scoring surfaced missing keywords and bumped my callbacks within two weeks of polishing drafts.",
+    "Version history and live scoring made iterating faster than doing it alone and kept every draft organized.",
+    "Clear keyword tips and impact-driven bullets helped me jump past screeners and secure quick callbacks.",
+    "Dashboard reminders and saved versions kept me focused on what mattered and cut rewrite time in half.",
+    "AI rewrites stayed true to my voice while adding metrics that recruiters immediately noticed in calls.",
+    "Uploading and getting a score plus next fixes made the ATS prep process feel simple and repeatable.",
+    "Targeted suggestions for each job post gave me confidence that my resume matched what hiring wanted.",
+    "The scanner caught formatting gaps and keyword misses I never saw, and responses spiked right after.",
+    "Impact formulas and measurable outcomes made my bullets punchier and led to interviews the same week.",
+    "Side-by-side versions with scores showed which draft worked best, so I stopped guessing and improved.",
   ];
+
+  const reviewNames = [
+    "Alex", "Jamie", "Taylor", "Riley", "Jordan", "Casey", "Morgan", "Avery", "Parker", "Drew",
+    "Harper", "Sydney", "Logan", "Reese", "Elliot", "Rowan", "Skyler", "Quinn", "Emery", "Hayden",
+    "Sawyer", "Finley", "Jules", "Milan", "Sasha", "Cory", "Arden", "Devin", "Kai", "Remy",
+  ];
+
+  const reviews = Array.from({ length: 50 }, (_, i) => ({
+    name: reviewNames[i % reviewNames.length],
+    rating: i < 40 ? 5 : i < 45 ? 4 : 5,
+    quote: reviewTemplates[i % reviewTemplates.length],
+  }));
 
   const benefits = [
     "50% higher chance of passing ATS filters with keyword alignment and formatting checks.",
@@ -35,11 +42,17 @@ const Start = () => {
   const performanceStats = [
     { label: "Resumes upgraded", value: "1,000+" },
     { label: "Active users", value: "100+" },
-    { label: "Higher interview chances", value: "50%" },
+    { label: "Average rating", value: "4.7★" },
     { label: "Avg. time saved per resume", value: "2 hrs" },
   ];
 
   const [currentReview, setCurrentReview] = useState(0);
+  const [contactName, setContactName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactMessage, setContactMessage] = useState("");
+  const [newReviewText, setNewReviewText] = useState("");
+  const [newReviewStars, setNewReviewStars] = useState(5);
+  const maxReviewChars = 150;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -50,7 +63,7 @@ const Start = () => {
 
   return (
     <main className="bg-gradient-to-r from-blue-200 to-purple-200 bg-cover min-h-screen">
-      <header className="flex items-center justify-between px-6 sm:px-8 lg:px-10 py-6 max-w-[1500px] w-full mx-auto">
+      <header className="flex items-center justify-between px-4 sm:px-8 lg:px-12 py-6 max-w-[1800px] w-full mx-auto">
         <Link to="/" className="text-3xl sm:text-4xl font-extrabold text-gradient hover:scale-[1.01] transition-all duration-200">
           SkillSnap.ai
         </Link>
@@ -70,7 +83,7 @@ const Start = () => {
         </div>
       </header>
 
-      <section className="max-w-[1500px] w-full mx-auto px-6 sm:px-8 lg:px-10 pb-4">
+      <section className="max-w-[1800px] w-full mx-auto px-4 sm:px-8 lg:px-12 pb-4">
         <div className="bg-white/60 border border-white/70 rounded-2xl px-6 py-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center justify-center w-10 h-10 rounded-full primary-gradient text-white font-bold shadow-lg">AI</span>
@@ -88,7 +101,7 @@ const Start = () => {
         </div>
       </section>
 
-      <section className="flex flex-col gap-12 px-6 sm:px-8 lg:px-10 pb-20 pt-12 max-w-[1500px] w-full mx-auto">
+      <section className="flex flex-col gap-12 px-4 sm:px-8 lg:px-12 pb-20 pt-12 max-w-[1800px] w-full mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col gap-8 lg:pr-6">
             <p className="inline-flex w-fit rounded-full bg-gradient-to-r from-[#5978ff] via-[#6386ff] to-[#7c7eff] px-4 py-2 text-sm font-semibold text-white shadow-md border border-white/30">
@@ -193,11 +206,13 @@ const Start = () => {
               style={{ animation: "fadeIn 0.6s ease" }}
             >
               <div className="flex items-center gap-1 text-xl text-white">
-                {"★ ★ ★ ★ ★"}
+                {"★".repeat(reviews[currentReview].rating)}
+                {"☆".repeat(5 - reviews[currentReview].rating)}
               </div>
               <p className="text-xl sm:text-2xl font-semibold text-white max-w-4xl">
                 “{reviews[currentReview].quote}”
               </p>
+              <p className="text-sm text-white/80">{reviews[currentReview].name}</p>
               <div className="flex items-center gap-2 mt-2">
                 {reviews.map((_, idx) => (
                   <span
@@ -208,6 +223,26 @@ const Start = () => {
                   />
                 ))}
               </div>
+            </div>
+          </div>
+
+          <div className="w-full overflow-x-auto py-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex gap-4 min-w-max">
+              {reviews.slice(0, 16).map((review, idx) => (
+                <div
+                  key={`${review.name}-${idx}`}
+                  className="bg-gradient-to-r from-[#5978ff] via-[#6386ff] to-[#7c7eff] text-white rounded-2xl px-5 py-4 shadow-lg border border-white/20 min-w-[280px] max-w-[320px]"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="font-semibold">{review.name}</p>
+                    <span className="text-sm">
+                      {"★".repeat(review.rating)}
+                      {"☆".repeat(5 - review.rating)}
+                    </span>
+                  </div>
+                  <p className="text-sm text-white/90">{review.quote}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -245,6 +280,77 @@ const Start = () => {
                 <p className="text-sm sm:text-base opacity-90">{stat.label}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section className="w-full bg-gradient-to-r from-[#5978ff] via-[#6386ff] to-[#7c7eff] text-white rounded-3xl p-8 sm:p-10 shadow-2xl flex flex-col gap-8">
+          <div className="flex flex-col gap-2 text-center">
+            <p className="text-sm font-semibold opacity-90">Stay in touch</p>
+            <h2 className="text-3xl sm:text-4xl font-semibold text-white !text-white">Contact us & share a review</h2>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/30 flex flex-col gap-4">
+              <p className="text-lg font-semibold">Contact us</p>
+              <input
+                className="w-full rounded-xl px-4 py-3 bg-white/80 text-gray-900 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                placeholder="Your name"
+                value={contactName}
+                onChange={(e) => setContactName(e.target.value)}
+              />
+              <input
+                className="w-full rounded-xl px-4 py-3 bg-white/80 text-gray-900 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                placeholder="Email"
+                value={contactEmail}
+                onChange={(e) => setContactEmail(e.target.value)}
+                type="email"
+              />
+              <textarea
+                className="w-full rounded-xl px-4 py-3 bg-white/80 text-gray-900 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-300 min-h-[140px]"
+                placeholder="Tell us how we can help"
+                value={contactMessage}
+                onChange={(e) => setContactMessage(e.target.value)}
+              />
+              <button className="primary-button w-fit px-5 py-3 text-base font-semibold hover:shadow-xl hover:-translate-y-0.5 active:scale-95 active:shadow-md">
+                Send message
+              </button>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/30 flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <p className="text-lg font-semibold">Leave a review</p>
+                <span className="text-sm text-white/80">{newReviewStars} / 5 stars</span>
+              </div>
+              <div className="flex gap-2">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    type="button"
+                    onClick={() => setNewReviewStars(star)}
+                    onMouseEnter={() => setNewReviewStars(star)}
+                    className={`h-12 w-12 rounded-full border border-white/40 flex items-center justify-center text-xl transition-all duration-150 ${
+                      star <= newReviewStars ? "bg-white text-indigo-600 shadow-lg scale-110 animate-bounce-small" : "bg-white/10 text-white"
+                    }`}
+                  >
+                    ★
+                  </button>
+                ))}
+              </div>
+              <textarea
+                className="w-full rounded-xl px-4 py-3 bg-white/80 text-gray-900 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-300 min-h-[140px]"
+                placeholder="Share your experience (150 characters max)"
+                value={newReviewText}
+                onChange={(e) => setNewReviewText(e.target.value.slice(0, maxReviewChars))}
+              />
+              <div className="flex items-center justify-between text-sm text-white/80">
+                <span>Keep it helpful and specific.</span>
+                <span>
+                  {newReviewText.length}/{maxReviewChars}
+                </span>
+              </div>
+              <button className="primary-button w-fit px-5 py-3 text-base font-semibold hover:shadow-xl hover:-translate-y-0.5 active:scale-95 active:shadow-md">
+                Submit review
+              </button>
+            </div>
           </div>
         </section>
       </section>

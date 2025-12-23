@@ -1,13 +1,25 @@
-import {Link} from "react-router";
+import { Link } from "react-router";
 import ScoreCircle from "~/components/ScoreCircle";
-import {useEffect, useState} from "react";
-import {usePuterStore} from "~/lib/puter";
+import { useEffect, useState } from "react";
+import { usePuterStore } from "~/lib/puter";
 
 const ResumeCard = ({
     resume: { id, companyName, jobTitle, feedback, imagePath },
     onDelete,
     isDeleting,
-}: { resume: Resume; onDelete: () => Promise<void> | void; isDeleting?: boolean }) => {
+    onDragStart,
+    onDragEnter,
+    onDragEnd,
+    isDragging,
+}: {
+    resume: Resume;
+    onDelete: () => Promise<void> | void;
+    isDeleting?: boolean;
+    onDragStart?: () => void;
+    onDragEnter?: () => void;
+    onDragEnd?: () => void;
+    isDragging?: boolean;
+  }) => {
     const { fs } = usePuterStore();
     const [resumeUrl, setResumeUrl] = useState('');
 
@@ -23,7 +35,27 @@ const ResumeCard = ({
     }, [imagePath]);
 
     return (
-        <Link to={`/resume/${id}`} className="resume-card animate-in fade-in duration-1000">
+        <Link
+            to={`/resume/${id}`}
+            className={`resume-card animate-in fade-in duration-1000 cursor-grab ${isDragging ? "ring-4 ring-indigo-300" : ""}`}
+            draggable
+            onDragStart={(e) => {
+                e.stopPropagation();
+                onDragStart?.();
+            }}
+            onDragEnter={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onDragEnter?.();
+            }}
+            onDragOver={(e) => {
+                e.preventDefault();
+            }}
+            onDragEnd={(e) => {
+                e.stopPropagation();
+                onDragEnd?.();
+            }}
+        >
             <div className="resume-card-header w-full">
                 <div className="flex flex-col gap-2 w-full">
                     {companyName && <h2 className="!text-black font-bold break-words">{companyName}</h2>}
@@ -43,7 +75,7 @@ const ResumeCard = ({
                         }}
                         disabled={isDeleting}
                     >
-                        {isDeleting ? "Deleting..." : "Delete"}
+                        {isDeleting ? "Removing..." : "Remove"}
                     </button>
                 </div>
             </div>

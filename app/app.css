@@ -159,3 +159,12 @@ form {
     opacity: 1;
   }
 }
+
+@keyframes bounce-small {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.animate-bounce-small {
+  animation: bounce-small 0.25s ease;
+}

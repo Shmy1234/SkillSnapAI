@@ -18,6 +18,7 @@ export default function Home() {
   const [resumes, setResumes] = useState<Resume[]>([]);
   const [loadingResumes, setLoadingResumes] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [draggingId, setDraggingId] = useState<string | null>(null);
 
   useEffect(() => {
     if(!auth.isAuthenticated) navigate('/auth?next=/dashboard');
@@ -58,6 +59,27 @@ export default function Home() {
     }
   }
 
+  const handleDragStart = (resumeId: string) => {
+    setDraggingId(resumeId);
+  };
+
+  const handleDragEnter = (resumeId: string) => {
+    if (!draggingId || draggingId === resumeId) return;
+    setResumes((prev) => {
+      const next = [...prev];
+      const fromIndex = next.findIndex((r) => r.id === draggingId);
+      const toIndex = next.findIndex((r) => r.id === resumeId);
+      if (fromIndex === -1 || toIndex === -1) return prev;
+      const [moved] = next.splice(fromIndex, 1);
+      next.splice(toIndex, 0, moved);
+      return next;
+    });
+  };
+
+  const handleDragEnd = () => {
+    setDraggingId(null);
+  };
+
   return <main className="bg-gradient-to-r from-blue-200 to-purple-200 bg-cover">
     <Navbar />
 
@@ -84,6 +106,10 @@ export default function Home() {
                   resume={resume}
                   isDeleting={deletingId === resume.id}
                   onDelete={() => handleDelete(resume.id, resume.imagePath, resume.resumePath)}
+                  onDragStart={() => handleDragStart(resume.id)}
+                  onDragEnter={() => handleDragEnter(resume.id)}
+                  onDragEnd={handleDragEnd}
+                  isDragging={draggingId === resume.id}
               />
           ))}
         </div>
