@@ -13,13 +13,14 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  const { auth, kv } = usePuterStore();
+  const { auth, kv, fs } = usePuterStore();
   const navigate = useNavigate();
   const [resumes, setResumes] = useState<Resume[]>([]);
   const [loadingResumes, setLoadingResumes] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
-    if(!auth.isAuthenticated) navigate('/auth?next=/');
+    if(!auth.isAuthenticated) navigate('/auth?next=/dashboard');
   }, [auth.isAuthenticated])
 
   useEffect(() => {
@@ -38,6 +39,24 @@ export default function Home() {
 
     loadResumes()
   }, []);
+
+  const handleDelete = async (resumeId: string, imagePath?: string, resumePath?: string) => {
+    setDeletingId(resumeId);
+    try {
+      await kv.delete(`resume:${resumeId}`);
+      if (imagePath) {
+        await fs.delete(imagePath);
+      }
+      if (resumePath) {
+        await fs.delete(resumePath);
+      }
+      setResumes((prev) => prev.filter((resume) => resume.id !== resumeId));
+    } catch (err) {
+      console.error("Failed to delete resume", err);
+    } finally {
+      setDeletingId(null);
+    }
+  }
 
   return <main className="bg-gradient-to-r from-blue-200 to-purple-200 bg-cover">
     <Navbar />
@@ -60,7 +79,12 @@ export default function Home() {
       {!loadingResumes && resumes.length > 0 && (
         <div className="resumes-section">
           {resumes.map((resume) => (
-              <ResumeCard key={resume.id} resume={resume} />
+              <ResumeCard
+                  key={resume.id}
+                  resume={resume}
+                  isDeleting={deletingId === resume.id}
+                  onDelete={() => handleDelete(resume.id, resume.imagePath, resume.resumePath)}
+              />
           ))}
         </div>
       )}

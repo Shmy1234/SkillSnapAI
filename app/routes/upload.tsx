@@ -13,6 +13,10 @@ const Upload = () => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [statusText, setStatusText] = useState('');
     const [file, setFile] = useState<File | null>(null);
+    const [companyName, setCompanyName] = useState('');
+    const [jobTitle, setJobTitle] = useState('');
+    const [jobDescription, setJobDescription] = useState('');
+    const [isSuggesting, setIsSuggesting] = useState(false);
 
     const handleFileSelect = (file: File | null) => {
         setFile(file)
@@ -65,17 +69,29 @@ const Upload = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const form = e.currentTarget.closest('form');
-        if(!form) return;
-        const formData = new FormData(form);
-
-        const companyName = formData.get('company-name') as string;
-        const jobTitle = formData.get('job-title') as string;
-        const jobDescription = formData.get('job-description') as string;
 
         if(!file) return;
 
         handleAnalyze({ companyName, jobTitle, jobDescription, file });
+    }
+
+    const suggestDescription = async () => {
+        setIsSuggesting(true);
+        try {
+            const prompt = `You are helping someone polish a resume for ${jobTitle || "a new role"} at ${companyName || "their target company"}.
+Write a concise, achievement-focused job description they can paste into a resume upload form. Keep it to 3-4 sentences, highlight measurable impact, and keep the tone professional and confident.`;
+            const response = await ai.chat(prompt);
+            if (!response) return;
+            const suggestion = typeof response.message.content === 'string'
+                ? response.message.content
+                : response.message.content?.[0]?.text || '';
+
+            if (suggestion) {
+                setJobDescription(suggestion.trim());
+            }
+        } finally {
+            setIsSuggesting(false);
+        }
     }
 
     return (
@@ -97,15 +113,46 @@ const Upload = () => {
                         <form id="upload-form" onSubmit={handleSubmit} className="flex flex-col gap-4 mt-8">
                             <div className="form-div">
                                 <label htmlFor="company-name">Company Name</label>
-                                <input type="text" name="company-name" placeholder="Company Name" id="company-name" />
+                                <input
+                                    type="text"
+                                    name="company-name"
+                                    placeholder="Company Name"
+                                    id="company-name"
+                                    value={companyName}
+                                    onChange={(e) => setCompanyName(e.target.value)}
+                                />
                             </div>
                             <div className="form-div">
                                 <label htmlFor="job-title">Job Title</label>
-                                <input type="text" name="job-title" placeholder="Job Title" id="job-title" />
+                                <input
+                                    type="text"
+                                    name="job-title"
+                                    placeholder="Job Title"
+                                    id="job-title"
+                                    value={jobTitle}
+                                    onChange={(e) => setJobTitle(e.target.value)}
+                                />
                             </div>
-                            <div className="form-div">
-                                <label htmlFor="job-description">Job Description</label>
-                                <textarea rows={5} name="job-description" placeholder="Job Description" id="job-description" />
+                            <div className="form-div w-full">
+                                <div className="flex items-center justify-between w-full gap-4">
+                                    <label htmlFor="job-description">Job Description</label>
+                                    <button
+                                        type="button"
+                                        className="text-sm font-semibold text-gradient"
+                                        onClick={suggestDescription}
+                                        disabled={isSuggesting}
+                                    >
+                                        {isSuggesting ? 'Getting suggestion...' : 'AI suggestion'}
+                                    </button>
+                                </div>
+                                <textarea
+                                    rows={5}
+                                    name="job-description"
+                                    placeholder="Paste the role description or generate one with AI"
+                                    id="job-description"
+                                    value={jobDescription}
+                                    onChange={(e) => setJobDescription(e.target.value)}
+                                />
                             </div>
 
                             <div className="form-div">
