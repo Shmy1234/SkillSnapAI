@@ -63,20 +63,20 @@ const Start = () => {
 
   return (
     <main className="bg-gradient-to-r from-blue-200 to-purple-200 bg-cover min-h-screen">
-      <header className="flex items-center justify-between px-4 sm:px-8 lg:px-12 py-6 max-w-[1800px] w-full mx-auto">
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between px-4 sm:px-8 lg:px-12 py-6 max-w-[1800px] w-full mx-auto text-center sm:text-left">
         <Link to="/" className="text-3xl sm:text-4xl font-extrabold text-gradient hover:scale-[1.01] transition-all duration-200">
           SkillSnap.ai
         </Link>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-end gap-3 w-full sm:w-auto">
           <Link
             to="/auth?next=/dashboard"
-            className="primary-button w-fit px-6 py-3 text-base font-semibold btn-animate"
+            className="primary-button w-full sm:w-fit px-6 py-3 text-base font-semibold text-center btn-animate"
           >
             Log in to dashboard
           </Link>
           <Link
             to="/upload"
-            className="bg-white text-gray-800 rounded-full px-6 py-3 font-semibold shadow-md btn-animate"
+            className="bg-white text-gray-800 rounded-full px-6 py-3 font-semibold shadow-md btn-animate w-full sm:w-fit text-center"
           >
             Try resume builder
           </Link>
@@ -84,15 +84,15 @@ const Start = () => {
       </header>
 
       <section className="max-w-[1800px] w-full mx-auto px-4 sm:px-8 lg:px-12 pb-4">
-        <div className="bg-white/60 border border-white/70 rounded-2xl px-6 py-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+        <div className="bg-white/60 border border-white/70 rounded-2xl px-6 py-4 shadow-sm flex flex-wrap items-center justify-center sm:justify-between gap-4 text-center sm:text-left">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 justify-center sm:justify-start">
             <span className="inline-flex items-center justify-center w-10 h-10 rounded-full primary-gradient text-white font-bold shadow-lg">AI</span>
             <div>
               <p className="text-sm font-semibold text-gray-800">Your resume co-pilot</p>
               <p className="text-sm text-gray-600">Upload, polish, and track every version in one place.</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
             <span className="text-sm font-semibold text-gray-800">Ready to start?</span>
             <Link to="/upload" className="primary-button w-fit px-4 py-2 text-sm font-semibold btn-animate">
               Build a resume
@@ -107,7 +107,7 @@ const Start = () => {
             <p className="inline-flex w-fit rounded-full bg-gradient-to-r from-[#5978ff] via-[#6386ff] to-[#7c7eff] px-4 py-2 text-sm font-semibold text-white shadow-md border border-white/30">
               AI-powered resume builder & tracker
             </p>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl leading-tight tracking-[-2px] font-semibold text-gray-900">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl leading-tight tracking-[-2px] font-semibold text-gray-900">
               Launch resumes that get callbacks, then track the feedback in one dashboard.
             </h1>
             <p className="text-xl text-gray-700 max-w-3xl">
@@ -131,7 +131,7 @@ const Start = () => {
           </div>
           <div className="relative w-full max-w-[720px] lg:justify-self-end">
             <div className="absolute inset-0 blur-3xl bg-gradient-to-br from-[#9cc0ff]/70 via-[#b7a8ff]/60 to-[#7ea6ff]/80 -z-10 rounded-[40px]" />
-            <div className="bg-gradient-to-r from-[#5978ff] via-[#6386ff] to-[#7c7eff] text-white rounded-[32px] shadow-2xl p-8 border border-white/20 flex flex-col gap-6 min-h-[600px] sm:min-h-[640px] lg:min-h-[700px]">
+            <div className="bg-gradient-to-r from-[#5978ff] via-[#6386ff] to-[#7c7eff] text-white rounded-[32px] shadow-2xl p-8 border border-white/20 flex flex-col gap-6 min-h-[520px] sm:min-h-[600px] lg:min-h-[700px]">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-base text-white/80">Live preview</p>
@@ -213,7 +213,7 @@ const Start = () => {
                 “{reviews[currentReview].quote}”
               </p>
               <p className="text-sm text-white/80">{reviews[currentReview].name}</p>
-              <div className="flex items-center gap-2 mt-2">
+              <div className="flex flex-wrap items-center justify-center gap-2 mt-2">
                 {reviews.map((_, idx) => (
                   <span
                     key={idx}
