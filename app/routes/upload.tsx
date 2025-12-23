@@ -1,4 +1,4 @@
-import {type FormEvent, useState} from 'react'
+import {type FormEvent, useEffect, useState} from 'react'
 import Navbar from "~/components/Navbar";
 import FileUploader from "~/components/FileUploader";
 import {usePuterStore} from "~/lib/puter";
@@ -17,6 +17,24 @@ const Upload = () => {
     const [jobTitle, setJobTitle] = useState('');
     const [jobDescription, setJobDescription] = useState('');
     const [isSuggesting, setIsSuggesting] = useState(false);
+
+    useEffect(() => {
+        // Guard: require an active plan; otherwise redirect to dashboard paywall.
+        if (typeof window === "undefined") return;
+        const stored = localStorage.getItem("skillsnap_plan");
+        if (!stored) {
+            navigate("/dashboard?plan=upgrade", { replace: true });
+            return;
+        }
+        try {
+            const parsed = JSON.parse(stored) as { expiresAt: number };
+            if (!parsed.expiresAt || parsed.expiresAt <= Date.now()) {
+                navigate("/dashboard?plan=upgrade", { replace: true });
+            }
+        } catch {
+            navigate("/dashboard?plan=upgrade", { replace: true });
+        }
+    }, []);
 
     const handleFileSelect = (file: File | null) => {
         setFile(file)

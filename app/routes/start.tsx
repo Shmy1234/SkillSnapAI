@@ -51,7 +51,7 @@ const Start = () => {
   const [contactEmail, setContactEmail] = useState("");
   const [contactMessage, setContactMessage] = useState("");
   const [newReviewText, setNewReviewText] = useState("");
-  const [newReviewStars, setNewReviewStars] = useState(5);
+  const [newReviewStars, setNewReviewStars] = useState(0);
   const maxReviewChars = 150;
 
   useEffect(() => {
