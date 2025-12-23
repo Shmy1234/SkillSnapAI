@@ -67,7 +67,8 @@ const ResumeCard = ({
                         <ScoreCircle score={feedback.overallScore} />
                     </div>
                     <button
-                        className="text-sm text-red-600 font-semibold hover:underline"
+                        type="button"
+                        className="h-9 w-9 flex items-center justify-center rounded-full border border-red-200 text-red-600 font-semibold hover:bg-red-50 hover:border-red-300 transition-colors"
                         onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
@@ -75,7 +76,7 @@ const ResumeCard = ({
                         }}
                         disabled={isDeleting}
                     >
-                        {isDeleting ? "Removing..." : "Remove"}
+                        {isDeleting ? "…" : "✕"}
                     </button>
                 </div>
             </div>
