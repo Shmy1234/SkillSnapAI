@@ -18,7 +18,7 @@ const Auth = () => {
     }, [auth.isAuthenticated, next])
 
     return (
-        <main className="bg-gradient-to-r from-blue-200 to-purple-200 bg-cover min-h-screen flex items-center justify-center">
+        <main className="bg-[#e6f0ff] min-h-screen flex items-center justify-center">
             <div className="gradient-border shadow-lg">
                 <section className="flex flex-col gap-8 bg-white rounded-2xl p-10">
                     <div className="flex flex-col items-center gap-2 text-center">

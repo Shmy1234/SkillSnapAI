@@ -24,14 +24,24 @@ const ResumeCard = ({
     const [resumeUrl, setResumeUrl] = useState('');
 
     useEffect(() => {
+        let url: string | null = null;
+        let isActive = true;
         const loadResume = async () => {
             const blob = await fs.read(imagePath);
             if(!blob) return;
-            let url = URL.createObjectURL(blob);
-            setResumeUrl(url);
+            url = URL.createObjectURL(blob);
+            if (isActive) {
+                setResumeUrl(url);
+            }
         }
 
         loadResume();
+        return () => {
+            isActive = false;
+            if (url) {
+                URL.revokeObjectURL(url);
+            }
+        };
     }, [imagePath]);
 
     return (
@@ -66,18 +76,7 @@ const ResumeCard = ({
                     <div className="flex-shrink-0">
                         <ScoreCircle score={feedback.overallScore} />
                     </div>
-                    <button
-                        type="button"
-                        className="h-9 w-9 flex items-center justify-center rounded-full border border-red-200 text-red-600 font-semibold hover:bg-red-50 hover:border-red-300 transition-colors"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            onDelete();
-                        }}
-                        disabled={isDeleting}
-                    >
-                        {isDeleting ? "…" : "✕"}
-                    </button>
+                    <div className="h-9 w-9" />
                 </div>
             </div>
             {resumeUrl && (

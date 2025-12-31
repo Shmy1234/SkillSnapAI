@@ -58,7 +58,7 @@ const Resume = () => {
                 </Link>
             </nav>
             <div className="flex flex-row w-full max-lg:flex-col-reverse gap-6">
-                <section className="feedback-section bg-gradient-to-r from-blue-200 to-purple-200 bg-cover lg:h-[100vh] lg:sticky lg:top-0 items-center justify-center">
+                <section className="feedback-section bg-[#e6f0ff] lg:h-[100vh] lg:sticky lg:top-0 items-center justify-center">
                     {imageUrl && resumeUrl && (
                         <div className="animate-in fade-in duration-1000 gradient-border w-full max-w-xl lg:h-[90%]">
                             <a href={resumeUrl} target="_blank" rel="noopener noreferrer">

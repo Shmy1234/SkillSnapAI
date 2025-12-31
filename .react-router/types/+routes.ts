@@ -27,15 +27,12 @@ type Pages = {
       "id": string;
     };
   };
-  "/wipe": {
-    params: {};
-  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/dashboard" | "/auth" | "/upload" | "/resume/:id" | "/wipe";
+    page: "/" | "/dashboard" | "/auth" | "/upload" | "/resume/:id";
   };
   "routes/start.tsx": {
     id: "routes/start";
@@ -56,9 +53,5 @@ type RouteFiles = {
   "routes/resume.tsx": {
     id: "routes/resume";
     page: "/resume/:id";
-  };
-  "routes/wipe.tsx": {
-    id: "routes/wipe";
-    page: "/wipe";
   };
 };

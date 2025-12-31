@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const meta = () => ([
   { title: "SkillSnap.ai | Home" },
@@ -7,31 +7,6 @@ export const meta = () => ([
 ]);
 
 const Start = () => {
-  const reviewTemplates = [
-    "ATS scoring surfaced missing keywords and bumped my callbacks within two weeks of polishing drafts.",
-    "Version history and live scoring made iterating faster than doing it alone and kept every draft organized.",
-    "Clear keyword tips and impact-driven bullets helped me jump past screeners and secure quick callbacks.",
-    "Dashboard reminders and saved versions kept me focused on what mattered and cut rewrite time in half.",
-    "AI rewrites stayed true to my voice while adding metrics that recruiters immediately noticed in calls.",
-    "Uploading and getting a score plus next fixes made the ATS prep process feel simple and repeatable.",
-    "Targeted suggestions for each job post gave me confidence that my resume matched what hiring wanted.",
-    "The scanner caught formatting gaps and keyword misses I never saw, and responses spiked right after.",
-    "Impact formulas and measurable outcomes made my bullets punchier and led to interviews the same week.",
-    "Side-by-side versions with scores showed which draft worked best, so I stopped guessing and improved.",
-  ];
-
-  const reviewNames = [
-    "Alex", "Jamie", "Taylor", "Riley", "Jordan", "Casey", "Morgan", "Avery", "Parker", "Drew",
-    "Harper", "Sydney", "Logan", "Reese", "Elliot", "Rowan", "Skyler", "Quinn", "Emery", "Hayden",
-    "Sawyer", "Finley", "Jules", "Milan", "Sasha", "Cory", "Arden", "Devin", "Kai", "Remy",
-  ];
-
-  const reviews = Array.from({ length: 50 }, (_, i) => ({
-    name: reviewNames[i % reviewNames.length],
-    rating: i < 40 ? 5 : i < 45 ? 4 : 5,
-    quote: reviewTemplates[i % reviewTemplates.length],
-  }));
-
   const benefits = [
     "50% higher chance of passing ATS filters with keyword alignment and formatting checks.",
     "Instant clarity on what to fix next instead of guessing where your resume is weak.",
@@ -46,7 +21,6 @@ const Start = () => {
     { label: "Avg. time saved per resume", value: "2 hrs" },
   ];
 
-  const [currentReview, setCurrentReview] = useState(0);
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactMessage, setContactMessage] = useState("");
@@ -54,15 +28,8 @@ const Start = () => {
   const [newReviewStars, setNewReviewStars] = useState(0);
   const maxReviewChars = 150;
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentReview((prev) => (prev + 1) % reviews.length);
-    }, 3500);
-    return () => clearInterval(interval);
-  }, [reviews.length]);
-
   return (
-    <main className="bg-gradient-to-r from-blue-200 to-purple-200 bg-cover min-h-screen">
+    <main className="bg-[#e6f0ff] min-h-screen">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between px-4 sm:px-8 lg:px-12 py-6 max-w-[1800px] w-full mx-auto text-center sm:text-left">
         <Link to="/" className="text-3xl sm:text-4xl font-extrabold text-gradient hover:scale-[1.01] transition-all duration-200">
           SkillSnap.ai
@@ -135,11 +102,8 @@ const Start = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-base text-white/80">Live preview</p>
-                  <p className="text-3xl font-semibold text-white">Your resume health</p>
+                  <p className="text-3xl font-semibold text-white">Your Resume Status</p>
                 </div>
-                <span className="primary-button px-4 py-2 text-sm font-semibold w-fit shadow-lg">
-                  Builder + Analyzer
-                </span>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white/15 backdrop-blur-md rounded-2xl p-4 transition-transform duration-200 hover:-translate-y-1 hover:shadow-2xl border border-white/30 shadow-lg">
@@ -194,58 +158,6 @@ const Start = () => {
             </div>
           ))}
         </div>
-        <section className="w-full bg-gradient-to-r from-[#5978ff] via-[#6386ff] to-[#7c7eff] border border-white/20 rounded-3xl p-8 sm:p-10 shadow-2xl flex flex-col gap-6 text-white">
-          <div className="flex flex-col gap-2 text-center">
-            <p className="text-sm font-semibold text-white/80">Customer love</p>
-            <h2 className="text-3xl sm:text-4xl font-semibold text-white !text-white">5-star experiences, on repeat</h2>
-          </div>
-          <div className="relative overflow-hidden rounded-2xl bg-white/15 backdrop-blur-md shadow-xl border border-white/30 p-6 sm:p-8 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
-            <div
-              key={currentReview}
-              className="flex flex-col gap-4 items-center text-center transition-opacity duration-500"
-              style={{ animation: "fadeIn 0.6s ease" }}
-            >
-              <div className="flex items-center gap-1 text-xl text-white">
-                {"★".repeat(reviews[currentReview].rating)}
-                {"☆".repeat(5 - reviews[currentReview].rating)}
-              </div>
-              <p className="text-xl sm:text-2xl font-semibold text-white max-w-4xl">
-                “{reviews[currentReview].quote}”
-              </p>
-              <p className="text-sm text-white/80">{reviews[currentReview].name}</p>
-              <div className="flex flex-wrap items-center justify-center gap-2 mt-2">
-                {reviews.map((_, idx) => (
-                  <span
-                    key={idx}
-                    className={`h-2 w-2 rounded-full transition-all duration-300 ${
-                      idx === currentReview ? "bg-indigo-500 w-6" : "bg-gray-300"
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="w-full overflow-x-auto py-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="flex gap-4 min-w-max">
-              {reviews.slice(0, 16).map((review, idx) => (
-                <div
-                  key={`${review.name}-${idx}`}
-                  className="bg-gradient-to-r from-[#5978ff] via-[#6386ff] to-[#7c7eff] text-white rounded-2xl px-5 py-4 shadow-lg border border-white/20 min-w-[280px] max-w-[320px]"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="font-semibold">{review.name}</p>
-                    <span className="text-sm">
-                      {"★".repeat(review.rating)}
-                      {"☆".repeat(5 - review.rating)}
-                    </span>
-                  </div>
-                  <p className="text-sm text-white/90">{review.quote}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         <section className="w-full bg-gradient-to-r from-[#5978ff] via-[#6386ff] to-[#7c7eff] border border-white/20 rounded-3xl p-8 sm:p-10 shadow-2xl flex flex-col gap-6 text-white">
           <div className="flex flex-col gap-2 text-center">

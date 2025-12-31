@@ -2,8 +2,8 @@ import type { Route } from "./+types/home";
 import Navbar from "~/components/Navbar";
 import ResumeCard from "~/components/ResumeCard";
 import {usePuterStore} from "~/lib/puter";
-import {Link, useNavigate, useLocation} from "react-router";
-import {useEffect, useState} from "react";
+import {useNavigate, useLocation} from "react-router";
+import {useCallback, useEffect, useState} from "react";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -13,7 +13,7 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  const { auth, kv, fs } = usePuterStore();
+  const { auth, kv } = usePuterStore();
   const navigate = useNavigate();
   const location = useLocation();
   const [resumes, setResumes] = useState<Resume[]>([]);
@@ -41,22 +41,19 @@ export default function Home() {
     if(!auth.isAuthenticated) navigate('/auth?next=/dashboard');
   }, [auth.isAuthenticated])
 
+  const loadResumes = useCallback(async () => {
+    setLoadingResumes(true);
+    const resumesList = (await kv.list("resume:*", true)) as KVItem[];
+    const parsedResumes = resumesList
+      ?.map((resume) => JSON.parse(resume.value) as Resume)
+      ?.filter(Boolean);
+    setResumes(parsedResumes || []);
+    setLoadingResumes(false);
+  }, [kv]);
+
   useEffect(() => {
-    const loadResumes = async () => {
-      setLoadingResumes(true);
-
-      const resumes = (await kv.list('resume:*', true)) as KVItem[];
-
-      const parsedResumes = resumes?.map((resume) => (
-          JSON.parse(resume.value) as Resume
-      ))
-
-      setResumes(parsedResumes || []);
-      setLoadingResumes(false);
-    }
-
-    loadResumes()
-  }, []);
+    loadResumes();
+  }, [loadResumes]);
 
   useEffect(() => {
     // If redirected from upload without an active plan, open the plan modal.
@@ -68,27 +65,7 @@ export default function Home() {
   }, [location.search, planChoice]);
 
   const handleDelete = async (resumeId: string, imagePath?: string, resumePath?: string) => {
-    setDeletingId(resumeId);
-    try {
-      await kv.delete(`resume:${resumeId}`);
-      // Remove from UI once DB deletion succeeds.
-      setResumes((prev) => prev.filter((resume) => resume.id !== resumeId));
-      // Best-effort file cleanup; log but don't block removal.
-      try {
-        if (imagePath) {
-          await fs.delete(imagePath);
-        }
-        if (resumePath) {
-          await fs.delete(resumePath);
-        }
-      } catch (fileErr) {
-        console.error("Failed to delete resume files", fileErr);
-      }
-    } catch (err) {
-      console.error("Failed to delete resume", err);
-    } finally {
-      setDeletingId(null);
-    }
+    // No-op: deletions disabled.
   }
 
   const handleDragStart = (resumeId: string) => {
@@ -145,7 +122,7 @@ export default function Home() {
     }, 800);
   };
 
-  return <main className="bg-gradient-to-r from-blue-200 to-purple-200 bg-cover">
+  return <main className="bg-[#e6f0ff]">
     <Navbar />
 
     <section className="main-section">
@@ -192,10 +169,7 @@ export default function Home() {
     {planChoice && (
       <div className="flex flex-col items-center justify-center mt-4 text-sm text-gray-700">
         {isPlanActive() ? (
-          <span className="bg-white/80 px-4 py-2 rounded-full shadow-sm">
-            Upgraded: {planChoice.tier} plan (Free) active until{" "}
-            {new Date(planChoice.expiresAt).toLocaleDateString()}
-          </span>
+          <span className="bg-white/80 px-4 py-2 rounded-full shadow-sm">Plan active</span>
         ) : (
           <span className="bg-white/80 px-4 py-2 rounded-full shadow-sm">
             Plan expired. Choose a plan to upload again.
