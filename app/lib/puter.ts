@@ -71,11 +71,11 @@ interface PuterStore {
             imageURL?: string | PuterChatOptions,
             testMode?: boolean,
             options?: PuterChatOptions
-        ) => Promise<AIResponse | undefined>;
+        ) => Promise<AnalysisResponse | undefined>;
         feedback: (
             path: string,
             message: string
-        ) => Promise<AIResponse | undefined>;
+        ) => Promise<AnalysisResponse | undefined>;
         img2txt: (
             image: string | File | Blob,
             testMode?: boolean
@@ -315,15 +315,14 @@ export const usePuterStore = create<PuterStore>((set, get) => {
         imageURL?: string | PuterChatOptions,
         testMode?: boolean,
         options?: PuterChatOptions
-    ) => {
+        ) => {
         const puter = getPuter();
         if (!puter) {
             setError("Puter.js not available");
             return;
         }
-        // return puter.ai.chat(prompt, imageURL, testMode, options);
         return puter.ai.chat(prompt, imageURL, testMode, options) as Promise<
-            AIResponse | undefined
+            AnalysisResponse | undefined
         >;
     };
 
@@ -351,7 +350,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
                 },
             ],
             { model: "claude-3-7-sonnet" }
-        ) as Promise<AIResponse | undefined>;
+        ) as Promise<AnalysisResponse | undefined>;
     };
 
     const img2txt = async (image: string | File | Blob, testMode?: boolean) => {

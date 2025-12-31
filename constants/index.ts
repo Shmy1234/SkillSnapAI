@@ -1,7 +1,7 @@
 export const resumes: Resume[] = [
     {
         id: "1",
-        companyName: "Google",
+        companyName: "Acme Corp",
         jobTitle: "Frontend Developer",
         imagePath: "/images/resume_01.png",
         resumePath: "/resumes/resume-1.pdf",
@@ -31,7 +31,7 @@ export const resumes: Resume[] = [
     },
     {
         id: "2",
-        companyName: "Microsoft",
+        companyName: "Northwind Systems",
         jobTitle: "Cloud Engineer",
         imagePath: "/images/resume_02.png",
         resumePath: "/resumes/resume-2.pdf",
@@ -61,8 +61,8 @@ export const resumes: Resume[] = [
     },
     {
         id: "3",
-        companyName: "Apple",
-        jobTitle: "iOS Developer",
+        companyName: "Pioneer Apps",
+        jobTitle: "Mobile Developer",
         imagePath: "/images/resume_03.png",
         resumePath: "/resumes/resume-3.pdf",
         feedback: {
@@ -91,7 +91,7 @@ export const resumes: Resume[] = [
     },
     {
         id: "4",
-        companyName: "Google",
+        companyName: "Acme Corp",
         jobTitle: "Frontend Developer",
         imagePath: "/images/resume_01.png",
         resumePath: "/resumes/resume-1.pdf",
@@ -121,7 +121,7 @@ export const resumes: Resume[] = [
     },
     {
         id: "5",
-        companyName: "Microsoft",
+        companyName: "Northwind Systems",
         jobTitle: "Cloud Engineer",
         imagePath: "/images/resume_02.png",
         resumePath: "/resumes/resume-2.pdf",
@@ -151,8 +151,8 @@ export const resumes: Resume[] = [
     },
     {
         id: "6",
-        companyName: "Apple",
-        jobTitle: "iOS Developer",
+        companyName: "Pioneer Apps",
+        jobTitle: "Mobile Developer",
         imagePath: "/images/resume_03.png",
         resumePath: "/resumes/resume-3.pdf",
         feedback: {
@@ -181,47 +181,47 @@ export const resumes: Resume[] = [
     },
 ];
 
-export const AIResponseFormat = `
+export const feedbackResponseFormat = `
       interface Feedback {
-      overallScore: number; //max 100
+      overallScore: number;
       ATS: {
-        score: number; //rate based on ATS suitability
+        score: number;
         tips: {
           type: "good" | "improve";
-          tip: string; //give 3-4 tips
+          tip: string;
         }[];
       };
       toneAndStyle: {
-        score: number; //max 100
+        score: number;
         tips: {
           type: "good" | "improve";
-          tip: string; //make it a short "title" for the actual explanation
-          explanation: string; //explain in detail here
-        }[]; //give 3-4 tips
+          tip: string;
+          explanation: string;
+        }[];
       };
       content: {
-        score: number; //max 100
+        score: number;
         tips: {
           type: "good" | "improve";
-          tip: string; //make it a short "title" for the actual explanation
-          explanation: string; //explain in detail here
-        }[]; //give 3-4 tips
+          tip: string;
+          explanation: string;
+        }[];
       };
       structure: {
-        score: number; //max 100
+        score: number;
         tips: {
           type: "good" | "improve";
-          tip: string; //make it a short "title" for the actual explanation
-          explanation: string; //explain in detail here
-        }[]; //give 3-4 tips
+          tip: string;
+          explanation: string;
+        }[];
       };
       skills: {
-        score: number; //max 100
+        score: number;
         tips: {
           type: "good" | "improve";
-          tip: string; //make it a short "title" for the actual explanation
-          explanation: string; //explain in detail here
-        }[]; //give 3-4 tips
+          tip: string;
+          explanation: string;
+        }[];
       };
     }`;
 
@@ -236,6 +236,6 @@ export const prepareInstructions = ({jobTitle, jobDescription}: { jobTitle: stri
       The job title is: ${jobTitle}
       The job description is: ${jobDescription}
       Provide the feedback using the following format:
-      ${AIResponseFormat}
+      ${feedbackResponseFormat}
       Return the analysis as an JSON object, without any other text and without the backticks.
       Do not include any other text or comments.`;

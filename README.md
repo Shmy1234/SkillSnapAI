@@ -1,13 +1,13 @@
-# SkillSnapAI
+# SkillSnap
 
-SkillSnapAI is an intelligent resume analysis web application that provides **AI-powered feedback**, **ATS scoring**, and **actionable improvement tips** to help job seekers enhance their resumes for their dream roles.
+SkillSnap is a resume analysis web application that provides **automated feedback**, **ATS scoring**, and **actionable improvement tips** to help job seekers enhance their resumes for their dream roles.
 
 ---
 
 ## 🚀 Features
 
-### 💼 AI Resume Feedback
-Upload your resume along with a job description — SkillSnapAI evaluates it for:
+### 💼 Resume Feedback
+Upload your resume along with a job description — SkillSnap evaluates it for:
 - Content alignment with the job
 - Keyword optimization
 - Formatting and readability
@@ -34,7 +34,7 @@ Upload your resume along with a job description — SkillSnapAI evaluates it for
 |-----------|---------------|
 | **Frontend** | React + TypeScript + Remix |
 | **UI Styling** | TailwindCSS with gradient theming |
-| **AI Integration** | Puter AI SDK (`ai.feedback`) |
+| **Analysis Engine** | Puter SDK feedback endpoint |
 | **Storage** | Puter File System (`fs` + `kv`) |
 | **Routing** | React Router DOM |
 | **PDF Processing** | Custom `convertPdfToImage` utility |
@@ -45,7 +45,7 @@ Upload your resume along with a job description — SkillSnapAI evaluates it for
 
 1. **Upload your resume (PDF)** along with job details.
 2. The app converts your resume to an image preview.
-3. **AI evaluates your resume** and provides detailed structured feedback:
+3. The resume is evaluated and returns detailed structured feedback:
    - ATS score
    - Strengths and weaknesses
    - Keyword and formatting tips
@@ -59,7 +59,7 @@ Upload your resume along with a job description — SkillSnapAI evaluates it for
 |------|--------------|
 | `/` | Dashboard showing uploaded resumes and feedback summaries |
 | `/upload` | Upload and analyze a new resume |
-| `/resume/:id` | View AI feedback and resume preview |
+| `/resume/:id` | View feedback and resume preview |
 | `/auth` | Login and logout functionality |
 | `/wipe` | Wipe all stored resume data |
 
@@ -69,9 +69,9 @@ Upload your resume along with a job description — SkillSnapAI evaluates it for
 
 - **Navbar** – Top navigation with quick access links.
 - **FileUploader** – Handles PDF uploads and drag-and-drop functionality.
-- **Summary, ATS, and Details** – Display structured AI feedback.
+- **Summary, ATS, and Details** – Display structured feedback.
 - **WipeApp** – Full system data reset tool.
-- **PuterStore** – Central store for authentication, storage, and AI calls.
+- **PuterStore** – Central store for authentication, storage, and feedback calls.
 
 ---
 
@@ -88,7 +88,7 @@ Upload your resume along with a job description — SkillSnapAI evaluates it for
 
 ## 🌈 Design Philosophy
 
-SkillSnapAI uses a **modern gradient-driven UI** built with TailwindCSS:
+SkillSnap uses a **modern gradient-driven UI** built with TailwindCSS:
 - Purple-to-black gradient backgrounds
 - Animated loading states (e.g., `resume-scan.gif`)
 - Consistent rounded cards and glowing borders

@@ -13,7 +13,7 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
         onFileSelect?.(file);
     }, [onFileSelect]);
 
-    const maxFileSize = 20 * 1024 * 1024; // 20MB in bytes
+    const maxFileSize = 20 * 1024 * 1024;
 
     const {getRootProps, getInputProps, isDragActive, acceptedFiles} = useDropzone({
         onDrop,

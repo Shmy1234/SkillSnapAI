@@ -49,7 +49,7 @@ interface PuterChatOptions {
     };
 }
 
-interface AIResponse {
+interface AnalysisResponse {
     index: number;
     message: {
         role: string;

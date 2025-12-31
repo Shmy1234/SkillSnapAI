@@ -2,8 +2,8 @@ import { Link } from "react-router";
 import { useState } from "react";
 
 export const meta = () => ([
-  { title: "SkillSnap.ai | Home" },
-  { name: "description", content: "AI resume builder, feedback, and dashboard tracking." },
+  { title: "SkillSnap | Home" },
+  { name: "description", content: "Resume builder, feedback, and dashboard tracking without the fluff." },
 ]);
 
 const Start = () => {
@@ -11,7 +11,7 @@ const Start = () => {
     "50% higher chance of passing ATS filters with keyword alignment and formatting checks.",
     "Instant clarity on what to fix next instead of guessing where your resume is weak.",
     "Every version is saved with scores so you can A/B test and keep the best draft.",
-    "AI-assisted bullets that emphasize impact, metrics, and role-specific phrasing.",
+    "Guided bullets that emphasize impact, metrics, and role-specific phrasing.",
   ];
 
   const performanceStats = [
@@ -32,7 +32,7 @@ const Start = () => {
     <main className="bg-[#e6f0ff] min-h-screen">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between px-4 sm:px-8 lg:px-12 py-6 max-w-[1800px] w-full mx-auto text-center sm:text-left">
         <Link to="/" className="text-3xl sm:text-4xl font-extrabold text-gradient hover:scale-[1.01] transition-all duration-200">
-          SkillSnap.ai
+          SkillSnap
         </Link>
         <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-end gap-3 w-full sm:w-auto">
           <Link
@@ -53,7 +53,7 @@ const Start = () => {
       <section className="max-w-[1800px] w-full mx-auto px-4 sm:px-8 lg:px-12 pb-4">
         <div className="bg-white/60 border border-white/70 rounded-2xl px-6 py-4 shadow-sm flex flex-wrap items-center justify-center sm:justify-between gap-4 text-center sm:text-left">
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 justify-center sm:justify-start">
-            <span className="inline-flex items-center justify-center w-10 h-10 rounded-full primary-gradient text-white font-bold shadow-lg">AI</span>
+            <span className="inline-flex items-center justify-center w-10 h-10 rounded-full primary-gradient text-white font-bold shadow-lg">Pro</span>
             <div>
               <p className="text-sm font-semibold text-gray-800">Your resume co-pilot</p>
               <p className="text-sm text-gray-600">Upload, polish, and track every version in one place.</p>
@@ -72,14 +72,14 @@ const Start = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col gap-8 lg:pr-6">
             <p className="inline-flex w-fit rounded-full bg-gradient-to-r from-[#5978ff] via-[#6386ff] to-[#7c7eff] px-4 py-2 text-sm font-semibold text-white shadow-md border border-white/30">
-              AI-powered resume builder & tracker
+              Guided resume builder & tracker
             </p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl leading-tight tracking-[-2px] font-semibold text-gray-900">
               Launch resumes that get callbacks, then track the feedback in one dashboard.
             </h1>
             <p className="text-xl text-gray-700 max-w-3xl">
               Upload your resume, get instant ATS-grade feedback, and save every version to your personal dashboard.
-              Log in to pick up where you left off, compare scores, and polish with AI suggestions.
+              Log in to pick up where you left off, compare scores, and polish with structured suggestions.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
@@ -117,7 +117,7 @@ const Start = () => {
                   <div className="bg-white/10 rounded-xl p-4 flex flex-col gap-2 text-white">
                     <p className="text-base text-white/80">Next best fix</p>
                     <p className="text-lg font-semibold text-white">Clarify measurable outcomes in experience</p>
-                    <p className="text-sm text-white/80">AI will draft impact statements for you.</p>
+                    <p className="text-sm text-white/80">Use the built-in prompts to draft impact statements.</p>
                   </div>
                 </div>
               </div>
@@ -148,7 +148,7 @@ const Start = () => {
           {[
             "Smart ATS scoring with tailored tips",
             "Resume versions auto-saved to your dashboard",
-            "AI writing assist for better descriptions",
+            "Writing prompts for better descriptions",
           ].map((item) => (
             <div
               key={item}
@@ -180,7 +180,7 @@ const Start = () => {
         <section className="w-full bg-gradient-to-r from-[#5978ff] via-[#6386ff] to-[#7c7eff] text-white rounded-3xl p-8 sm:p-10 shadow-2xl flex flex-col gap-8">
           <div className="flex flex-col gap-2 text-center">
             <p className="text-sm font-semibold opacity-90">Proven performance</p>
-            <h2 className="text-3xl sm:text-4xl font-semibold text-white !text-white">What users achieve with SkillSnap.ai</h2>
+            <h2 className="text-3xl sm:text-4xl font-semibold text-white !text-white">What users achieve with SkillSnap</h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
             {performanceStats.map((stat) => (

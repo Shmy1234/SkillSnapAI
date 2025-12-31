@@ -7,8 +7,8 @@ import {useCallback, useEffect, useState} from "react";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "SkillSnap.ai" },
-    { name: "description", content: "Smart feedback for your dream job!" },
+    { title: "SkillSnap" },
+    { name: "description", content: "Smart resume feedback for your dream job." },
   ];
 }
 
@@ -32,7 +32,6 @@ export default function Home() {
         const parsed = JSON.parse(stored) as { tier: string; expiresAt: number };
         setPlanChoice(parsed);
       } catch {
-        // ignore malformed storage
       }
     }
   }, []);
@@ -56,7 +55,6 @@ export default function Home() {
   }, [loadResumes]);
 
   useEffect(() => {
-    // If redirected from upload without an active plan, open the plan modal.
     const params = new URLSearchParams(location.search);
     const requiresPlan = params.get("plan") === "upgrade";
     if (requiresPlan && !isPlanActive()) {
@@ -65,7 +63,6 @@ export default function Home() {
   }, [location.search, planChoice]);
 
   const handleDelete = async (resumeId: string, imagePath?: string, resumePath?: string) => {
-    // No-op: deletions disabled.
   }
 
   const handleDragStart = (resumeId: string) => {
@@ -112,7 +109,6 @@ export default function Home() {
     };
     const choice = { tier, expiresAt: now + durations[tier] };
     setStripeRedirecting(true);
-    // Simulate Stripe checkout redirect/success.
     setTimeout(() => {
       setPlanChoice(choice);
       localStorage.setItem("skillsnap_plan", JSON.stringify(choice));
@@ -131,7 +127,7 @@ export default function Home() {
         {!loadingResumes && resumes?.length === 0 ? (
             <h2>No resumes found. Upload your first resume to get feedback.</h2>
         ): (
-          <h2>Review your submissions and check AI-powered feedback.</h2>
+          <h2>Review your submissions and check detailed feedback.</h2>
         )}
       </div>
       {loadingResumes && (

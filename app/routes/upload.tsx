@@ -19,7 +19,6 @@ const Upload = () => {
     const [isSuggesting, setIsSuggesting] = useState(false);
 
     useEffect(() => {
-        // Guard: require an active plan; otherwise redirect to dashboard paywall.
         if (typeof window === "undefined") return;
         const stored = localStorage.getItem("skillsnap_plan");
         if (!stored) {
@@ -89,17 +88,17 @@ const Upload = () => {
 
             setStatusText('Analyzing...');
 
-            let feedback: AIResponse | undefined;
+            let feedback: AnalysisResponse | undefined;
             try {
                 feedback = await withTimeout(
                     ai.feedback(
                         uploadedFile.path,
                         prepareInstructions({ jobTitle, jobDescription })
-                    ) as Promise<AIResponse | undefined>,
+                    ) as Promise<AnalysisResponse | undefined>,
                     45000
                 );
             } catch (err) {
-                console.error("AI feedback failed or timed out", err);
+                console.error("Feedback request failed or timed out", err);
                 return fail('Error: Analysis timed out or failed. Please try again.');
             }
             if (!feedback) {
@@ -196,13 +195,13 @@ Write a concise, achievement-focused job description they can paste into a resum
                                         onClick={suggestDescription}
                                         disabled={isSuggesting}
                                     >
-                                        {isSuggesting ? 'Getting suggestion...' : 'AI suggestion'}
+                                        {isSuggesting ? 'Getting suggestion...' : 'Generate description'}
                                     </button>
                                 </div>
                                 <textarea
                                     rows={5}
                                     name="job-description"
-                                    placeholder="Paste the role description or generate one with AI"
+                                    placeholder="Paste the role description or generate one automatically"
                                     id="job-description"
                                     value={jobDescription}
                                     onChange={(e) => setJobDescription(e.target.value)}
